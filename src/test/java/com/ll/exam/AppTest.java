@@ -1,10 +1,8 @@
 package com.ll.exam;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,35 +16,20 @@ public class AppTest {
     }
 
     @Test
-    void 문자열스캐너_테스트() {
-        String input = """
-                등록
-                명언1
-                작가1
-                """.stripIndent();
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        Scanner sc = new Scanner(in);
+    void 표준출력_테스트() {
+        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
+        System.out.print("안녕");
 
-        String cmd = sc.nextLine().trim();
-        String content = sc.nextLine().trim();
-        String author = sc.nextLine().trim();
+        String result = output.toString();
+        TestUtil.clearSetOutToByteArray(output);
 
-        assertEquals("등록", cmd);
-        assertEquals("명언1", content);
-        assertEquals("작가1", author);
+        assertEquals("안녕", result);
     }
 
     @Test
-    void 표준출력_테스트() throws IOException {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-
-        System.out.println("안녕");
-        String result = output.toString().trim();
-
-        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
-        output.close();
-
-        assertEquals("안녕", result);
+    void 스캐너_테스트() {
+        Scanner sc = TestUtil.getScanner("안녕");
+        String cmd = sc.nextLine().trim();
+        assertEquals("안녕", cmd);
     }
 }
