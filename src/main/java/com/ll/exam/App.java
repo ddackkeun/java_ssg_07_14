@@ -15,6 +15,12 @@ public class App {
         sequence = 0;
     }
 
+    public App(Scanner sc) {
+        this.sc = sc;
+        wiseSayingList = new ArrayList<>();
+        sequence = 0;
+    }
+
     public void run() {
         System.out.println("== 명언 SSG ==");
 
@@ -46,6 +52,15 @@ public class App {
         sc.close();
     }
 
+    private WiseSaying findById(int id) {
+        for (WiseSaying wiseSaying : wiseSayingList) {
+            if (wiseSaying.getId() == id) {
+                return wiseSaying;
+            }
+        }
+        return null;
+    }
+
     private void modify(Rq rq) {
         if(rq.getParamMap() == null ) return ;
 
@@ -56,12 +71,7 @@ public class App {
             return;
         }
 
-        WiseSaying foundWiseSaying = null;
-        for (WiseSaying wiseSaying : wiseSayingList) {
-            if (wiseSaying.getId() == selectedId) {
-                foundWiseSaying = wiseSaying;
-            }
-        }
+        WiseSaying foundWiseSaying = findById(selectedId);
 
         // 존재하지 않음
         if (foundWiseSaying == null) {
@@ -115,13 +125,7 @@ public class App {
             return;
         }
 
-        WiseSaying foundWiseSaying = null;
-        for (WiseSaying wiseSaying : wiseSayingList) {
-            if (wiseSaying.getId() == selectedId) {
-                foundWiseSaying =  wiseSaying;
-                break;
-            }
-        }
+        WiseSaying foundWiseSaying = findById(selectedId);
 
         // 존재하지 않음
         if (foundWiseSaying == null) {
