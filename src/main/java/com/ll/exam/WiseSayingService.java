@@ -4,56 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WiseSayingService {
-    private int sequence;
-    private List<WiseSaying> wiseSayingList;
+
+    private WiseSayingRepository wiseSayingRepository;
 
     public WiseSayingService() {
-        sequence = 0;
-        wiseSayingList = new ArrayList<>();
-    }
-
-    public WiseSaying findById(Integer id) {
-        for (WiseSaying wiseSaying : wiseSayingList) {
-            if (wiseSaying.getId() == id) {
-                return wiseSaying;
-            }
-        }
-        return null;
+        wiseSayingRepository = new WiseSayingRepository();
     }
 
     public WiseSaying register(String content, String author) {
-        int id = ++sequence;
-
-        WiseSaying newWiseSaying = new WiseSaying(id, content, author);
-        wiseSayingList.add(newWiseSaying);
-
-        return newWiseSaying;
+        return wiseSayingRepository.save(content, author);
     }
 
-    public List<WiseSaying> findAll() {
-        return new ArrayList<>(wiseSayingList);
+    public List<WiseSaying> list() {
+        return wiseSayingRepository.findAll();
     }
-
 
     public boolean remove(Integer id) {
-        WiseSaying foundWiseSaying = findById(id);
-
-        if (foundWiseSaying == null) {
-            return false;
-        }
-        wiseSayingList.remove(foundWiseSaying);
-        return true;
+        return wiseSayingRepository.remove(id);
     }
 
     public boolean modify(int id, String content, String author) {
-        WiseSaying foundWiseSaying = wiseSayingList.get(id);
+        return wiseSayingRepository.modify(id, content, author);
+    }
 
-        if (foundWiseSaying == null) {
-            return false;
-        }
-
-        foundWiseSaying.setContent(content);
-        foundWiseSaying.setAuthor(author);
-        return true;
+    public WiseSaying findMember(int id) {
+        return wiseSayingRepository.findById(id);
     }
 }

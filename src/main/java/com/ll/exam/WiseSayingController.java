@@ -27,7 +27,7 @@ public class WiseSayingController {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        List<WiseSaying> wiseSayingList = wiseSayingService.findAll();
+        List<WiseSaying> wiseSayingList = wiseSayingService.list();
 
         // 내림차순 출력
         for (int i = wiseSayingList.size() - 1; i >= 0; i--) {
@@ -48,7 +48,7 @@ public class WiseSayingController {
             return;
         }
 
-        WiseSaying foundWiseSaying = wiseSayingService.findById(selectedId);
+        WiseSaying foundWiseSaying = wiseSayingService.findMember(selectedId);
 
         // 존재하지 않음
         if (foundWiseSaying == null) {
@@ -75,7 +75,7 @@ public class WiseSayingController {
             return;
         }
 
-        WiseSaying foundWiseSaying = wiseSayingService.findById(selectedId);
+        WiseSaying foundWiseSaying = wiseSayingService.findMember(selectedId);
 
         // 존재하지 않음
         if (foundWiseSaying == null) {
